@@ -1,0 +1,87 @@
+<div class="container">
+
+    <form class="card" [formGroup]="formularioRegistro" (ngSubmit)="crearCuenta()"> <!--falta el ((ngSubmit)="")-->
+        <div class="card-body">
+        <h1>Registro</h1>
+        <div>
+            <label for="nombre">Nombre: </label>
+            <input class="ms-1" type="text" name="nombre" id="nombre" formControlName="nombre" />
+            @if(nombre?.hasError("required")&& nombre?.touched){
+                <small class="error">El campo nombre es requerido</small>
+            }
+            @if (nombre?.hasError('minlength') && nombre?.touched) {
+                <small class="error">El nombre debe tener al menos 3 caracteres</small>
+            }
+            @if (nombre?.hasError('maxlength') && nombre?.touched) {
+            <small class="error">El nombre no debe superar los 20 caracteres</small>
+        }
+    </div>
+        <div>
+            <label for="apellido">Apellido: </label>
+            <input class="ms-1" type="text" name="apellido" id="apellido" formControlName="apellido" />
+            @if(apellido?.hasError("required")&& apellido?.touched){
+                <small class="error">El campo apellido es requerido</small>
+            }
+            @if (apellido?.hasError('minlength') && apellido?.touched) {
+                <small class="error">El apellido debe tener al menos 3 caracteres</small>
+            }
+            @if (apellido?.hasError('maxlength') && apellido?.touched) {
+                <small class="error">El apellido no debe superar los 20 caracteres</small>
+            }
+        </div>
+        <!--@if (apellido?.hasError('maxlength) && apellido?.touched) {
+            <small class="error">El apellido no debe superar los 20 caracteres</small>}
+        </div> -->
+        <div>
+            <label for="email">Email: </label>
+            <input class="ms-1" type="email" name="email" id="email" formControlName="email" />
+            
+            @if(email?.hasError("required")&& email?.touched){
+                <small class="error">El campo email es requerido</small>
+            }
+            @if(email?.hasError("email") && email?.touched){
+                <small class="error">El email ingresado no es valido</small>
+            }
+        </div>
+        <div>
+            <label for="edad">Edad: </label>
+            <input class="ms-1" type="number" name="edad" id="edad" formControlName="edad" />
+            @if(edad?.hasError("required")&& edad?.touched){
+                <small class="error">El campo edad es requerido</small>
+            }
+            
+            @if(edad?.hasError("min") && edad?.touched){
+                <small class="error">La edad ingresada no es valida. Debe ser mayor a 5</small>
+            }
+            @if( edad?.hasError("max") && edad?.touched){
+                <small class="error">La edad ingresada no es valida. Debe ser menor a 100</small>
+            }
+        </div>
+        
+        <div>
+            <label for="password">Password: </label>
+            <input class="ms-1" type="password" name="password" id="password" formControlName="password" />
+            @if(password?.hasError("required")&& password?.touched){
+                <small class="error">El campo password es requerido</small>
+            }
+            @if(password?.hasError("minlength") && password?.touched){
+                <small class="error">La contraseña debe ser alfanumerica, contener simbolos y ser mayor a 7 digitos</small>
+            }
+        </div>
+        <div>
+            <label for="repetirPassword">Repetir Password: </label>
+            <input class="ms-1" type="password" name="repetirPassword" id="repetirPassword"
+                formControlName="repetirPassword" />
+            @if(repetirPassword?.hasError("required") && repetirPassword?.touched){
+                <small class="error">El campo repetirContraseña es requerido</small>
+            }
+            @if (repetirPassword?.hasError("validarPassword") && repetirPassword?.touched) {
+                <small class="error">Las contraseñas no coinciden</small>
+            }
+        </div>
+        
+    </div>
+    <button class="btn btn-dark" type="submit" [disabled]="!formularioRegistro.valid">Crear Usuario</button>
+
+</form>
+</div>

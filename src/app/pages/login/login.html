@@ -1,0 +1,30 @@
+<div class="container">
+    <form class="card" [formGroup]="formularioLogin">
+        <div class="card-body">
+            <h1>Log in</h1>
+            <div>   
+                <label for="email">Correo: </label>
+                <input class="ms-1" type="email" name="email" id="email" formControlName="email"/>
+                @if(email?.hasError('required') && email?.touched){
+                <small class="error">El campo email es requerido</small>
+            }
+        </div>
+        
+        <div>   
+            <label for="password">Password: </label>
+            <input class="ms-1" type="password" name="password" id="password" formControlName="password"/>
+            @if(this.password?.hasError('required') && password?.touched){
+                <small class="error">El campo password es requerido</small>
+            }
+        </div>
+    </div>
+    
+    <button class="btn btn-dark" type="submit" [disabled]="!this.formularioLogin.valid" (click)="iniciarSesion()" routerLink="/auth/games">Log in</button>
+    
+    <div class="containter-button">
+        <button class="button-access"  (click)="iniciarRapido(accesoUno)">Acceso 1</button>
+        <button class="button-access" (click)="iniciarRapido(accesoDos)">Acceso 2</button>
+        <button class="button-access" (click)="iniciarRapido(accesoTres)">Acceso 3</button>
+    </div>
+</form>
+</div>
