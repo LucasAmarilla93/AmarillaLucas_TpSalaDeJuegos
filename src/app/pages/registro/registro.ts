@@ -82,6 +82,7 @@ export class Registro {
       const { repetirPassword, edad, ...datosFiltrados } = this.formularioRegistro.value;
       const datos = { ...datosFiltrados, edad: Number(edad) } as IRegistro;
       const registro = await this.authService.registrar(datos);
+      
       if (registro){
         this.router.navigate(['/home'])}
       };

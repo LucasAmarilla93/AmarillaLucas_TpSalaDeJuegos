@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { Credenciales } from './login.interfaces';
-import { Auth } from '../../auth/auth';
 import { AuthService } from '../../auth/auth.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { email } from '@angular/forms/signals';
@@ -47,9 +46,12 @@ export class Login {
     return this.formularioLogin.get("password");
   }
 
-  iniciarSesion(){
+  async iniciarSesion(){
     if(this.formularioLogin.valid){
-      this.auth.loguear(this.formularioLogin.value as ILogin).then(()=> {this.router.navigate(['/home'])})
+      const log = await this.auth.loguear(this.formularioLogin.value as ILogin)
+      if (log){
+        this.router.navigate(['/home'])
+      }
     }
   }
 

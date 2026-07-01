@@ -15,12 +15,19 @@ export class AuthService {
   urlSupabase: string = 'https://weybxnutahapdhfyyzfv.supabase.co';
   supabase: SupabaseClient<any, 'public', 'public', any, any>;
   usuarioActual: WritableSignal<User | null> = signal<User | null>(null);
+  
+  
+
 
   constructor() {
     this.supabase = createClient(this.urlSupabase, this.publicKey);
     this.supabase.auth.onAuthStateChange((event, session) => {
       this.usuarioActual.set(session != null ? session.user : null);
     });
+
+    //Canal de RealTime
+    
+
   }
 
   async registrar(datos: IRegistro): Promise<boolean> {
@@ -83,7 +90,7 @@ export class AuthService {
     }
   }
 
-  async loguear(datos: ILogin): Promise<void> {
+  async loguear(datos: ILogin): Promise<boolean> {
     const response: AuthResponse = await this.supabase.auth.signInWithPassword({
       email: datos.email,
       password: datos.password,
@@ -137,17 +144,21 @@ export class AuthService {
             title: 'Error',
           });
       }
+      return false
     } else {
       Toast.fire({
         icon: 'success',
         title: 'Conectado Exitosamente',
         text: 'Coneccion Exitosa',
       });
+      return true
     }
   }
 
   async cerrarSesion() {
     await this.supabase?.auth.signOut({});
+    this.usuarioActual.set(null);
+    this.router.navigateByUrl('/home');
   }
 
   async obtenerUsuarioActual(): Promise<User | null> {
@@ -164,4 +175,8 @@ export class AuthService {
 
   //Darle implementacion luego.
   async verificarRol() {}
+
+
+
+
 }
