@@ -1,6 +1,6 @@
 import { inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthResponse, createClient, SupabaseClient, User } from '@supabase/supabase-js';
+import { AuthResponse, createClient, RealtimeChannel, SupabaseClient, User } from '@supabase/supabase-js';
 import { ILogin, IRegistro } from './auth.interfaces';
 import { email } from '@angular/forms/signals';
 import { Toast } from '../classes/toast';
@@ -15,7 +15,7 @@ export class AuthService {
   urlSupabase: string = 'https://weybxnutahapdhfyyzfv.supabase.co';
   supabase: SupabaseClient<any, 'public', 'public', any, any>;
   usuarioActual: WritableSignal<User | null> = signal<User | null>(null);
-  
+  canal: RealtimeChannel;
   
 
 
@@ -24,10 +24,10 @@ export class AuthService {
     this.supabase.auth.onAuthStateChange((event, session) => {
       this.usuarioActual.set(session != null ? session.user : null);
     });
-
-    //Canal de RealTime
     
-
+    //Canal de RealTime
+    this.canal = this.supabase.channel('table-db-changes');
+    
   }
 
   async registrar(datos: IRegistro): Promise<boolean> {
@@ -176,7 +176,7 @@ export class AuthService {
   //Darle implementacion luego.
   async verificarRol() {}
 
-
+  
 
 
 }
