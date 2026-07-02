@@ -18,13 +18,12 @@
 </nav>
 
 
+
+<router-outlet/>
+
 <div class="container-chat">
     @if(authService.usuarioActual()){
         <app-chat></app-chat>
     }
 </div>
 
-
-
-
-<router-outlet/>

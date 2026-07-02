@@ -3,10 +3,12 @@ import { FormsModule } from '@angular/forms';
 import { ChatService } from '../../services/chat.service';
 import { IMensaje } from './mensaje.interface';
 import { single, Subscription } from 'rxjs';
+import { DatePipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-chat',
-  imports: [FormsModule],
+  imports: [FormsModule,DatePipe],
   templateUrl: './chat.html',
   styleUrl: './chat.css',
 })
@@ -17,7 +19,7 @@ export class Chat implements OnInit{
   chatService = inject(ChatService)
   mensajes: WritableSignal<IMensaje[]> = signal([]);
   contenido: string = "";
- 
+  nombreUsuario = this.chatService.usuarioChat;
  //Crear canal que escucha eventos.
 
   async ngOnInit(): Promise<void> {

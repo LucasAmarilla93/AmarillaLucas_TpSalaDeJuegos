@@ -4,8 +4,8 @@
   justify-content: flex-start; /* que el contenido empiece desde arriba */
   align-items: center;         /* que quede centrado horizontalmente */
   overflow: hidden;            /* ya lo tenés para cortar exceso */
-  width: 500px;
-  height: 420px;
+  width: 380px;
+  height: 360px;
   background: #07182E;
   position: relative;
   border-radius: 20px;
@@ -45,8 +45,8 @@
 }  
 
 .card-img-container{
-  width: 300px;
-  height: 300px;
+  width: 230px;
+  height: 230px;
 /*   border: 10px solid green; */
   position: absolute;
   background-color: white;

@@ -1,23 +1,36 @@
-<button class="chat-toggle" (click)="chatAbierto = !chatAbierto">
-    Chat
-</button>
+<div class="chat-wrapper">
+  <button class="chat-toggle" (click)="chatAbierto = !chatAbierto">
+    {{ chatAbierto ? 'Cerrar chat' : 'Chat' }}
+  </button>
 
-@if(chatAbierto){
-<div class="chat-container">
-    <h2>Chat</h2>
-    <div class="c-mensajes">
-        @for(msj of mensajes(); track msj.id){
-        <div class="mensaje">
-            <small>{{ msj.creado_en }}</small>
-            <p class="nombre">{{ msj.usuario }}</p>
-            <p>{{ msj.contenido }}</p>
-        </div>
+  @if (chatAbierto) {
+
+    <div class="chat-container">
+      <div class="c-mensajes">
+
+        @for (msj of mensajes(); track msj.id) {
+          @if (msj.usuario === nombreUsuario) {
+            <div class="mensaje mio">
+              <small>{{ msj.creado_en |  date: 'M/d/yy, h:mm a':'America/Argentina/Buenos_Aires' }}</small>
+              <p class="nombre">{{ msj.usuario }}</p>
+              <p>{{ msj.contenido }}</p>
+            </div>
+          } @else {
+            <div class="mensaje otro">
+              <small>{{ msj.creado_en | date: 'M/d/yy, h:mm a':'America/Argentina/Buenos_Aires'}}</small>
+              <p class="nombre">{{ msj.usuario }}</p>
+              <p>{{ msj.contenido }}</p>
+            </div>
+          }
         }
-    </div>
-    <div class="chat-input">
-        <input type="text" name="contenido" id="contenido" [(ngModel)]="contenido"
-            placeholder="Escribí un mensaje..." />
+
+      </div>
+      <div class="chat-input">
+        <input type="text"
+               [(ngModel)]="contenido"
+               placeholder="Escribí un mensaje..." />
         <button (click)="enviar()">Enviar</button>
+      </div>
     </div>
+  }
 </div>
-}
