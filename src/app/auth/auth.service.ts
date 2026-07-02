@@ -1,6 +1,12 @@
 import { inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthResponse, createClient, RealtimeChannel, SupabaseClient, User } from '@supabase/supabase-js';
+import {
+  AuthResponse,
+  createClient,
+  RealtimeChannel,
+  SupabaseClient,
+  User,
+} from '@supabase/supabase-js';
 import { ILogin, IRegistro } from './auth.interfaces';
 import { email } from '@angular/forms/signals';
 import { Toast } from '../classes/toast';
@@ -16,18 +22,15 @@ export class AuthService {
   supabase: SupabaseClient<any, 'public', 'public', any, any>;
   usuarioActual: WritableSignal<User | null> = signal<User | null>(null);
   canal: RealtimeChannel;
-  
-
 
   constructor() {
     this.supabase = createClient(this.urlSupabase, this.publicKey);
     this.supabase.auth.onAuthStateChange((event, session) => {
       this.usuarioActual.set(session != null ? session.user : null);
     });
-    
+
     //Canal de RealTime
     this.canal = this.supabase.channel('table-db-changes');
-    
   }
 
   async registrar(datos: IRegistro): Promise<boolean> {
@@ -43,7 +46,7 @@ export class AuthService {
         },
       },
     });
-    console.log(response)
+    console.log(response);
     if (response.error) {
       console.log(response.error);
       switch (response.error.name) {
@@ -78,8 +81,8 @@ export class AuthService {
             title: 'Error',
             text: 'Error desconocido',
           });
-        }
-        return false;
+      }
+      return false;
     } else {
       Toast.fire({
         icon: 'success',
@@ -144,14 +147,14 @@ export class AuthService {
             title: 'Error',
           });
       }
-      return false
+      return false;
     } else {
       Toast.fire({
         icon: 'success',
         title: 'Conectado Exitosamente',
         text: 'Coneccion Exitosa',
       });
-      return true
+      return true;
     }
   }
 
@@ -176,7 +179,8 @@ export class AuthService {
   //Darle implementacion luego.
   async verificarRol() {}
 
+  get nombreUsuario(): string | undefined {
+    return this.usuarioActual()?.user_metadata?.['nombre'];
+  }
   
-
-
 }

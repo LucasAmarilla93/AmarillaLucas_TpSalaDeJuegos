@@ -2,7 +2,7 @@
     <div class="puntaje-container">Puntaje: {{puntaje}}</div>
     <div class="vidas-container">Intentos Restantes: {{intentosPermitidos}}</div>
     <button class="btn-reiniciar" id="btn-reiniciar" (click)="reiniciar()">Reiniciar Juego</button>
-    <button class="btn-guardar" id="btn-guardar" (click)="guardar()">Guardar Puntaje</button>
+    <!--<button class="btn-guardar" id="btn-guardar" (click)="guardarPuntaje(puntaje)">Guardar Puntaje</button> -->
 
     <div class= "cartas-container">
         <div class="carta-inicio">
@@ -15,9 +15,10 @@
 
     </div>
     
-    <button class="btn-menor" id="btn-mayor-menor" (click)="compararCartas(1)">Menor</button>
-    <button class="btn-igual" id="btn-mayor-menor" (click)="compararCartas(2)">Igual</button>
-    <button class="btn-mayor" id="btn-mayor-menor" (click)="compararCartas(3)">Mayor</button>
+    
+    <button class="btn-menor" id="btn-mayor-menor" [disabled]="intentosPermitidos <= 0"  (click)="compararCartas(1)">Menor</button>
+    <button class="btn-igual" id="btn-mayor-menor" [disabled]="intentosPermitidos <= 0"  (click)="compararCartas(2)">Igual</button>
+    <button class="btn-mayor" id="btn-mayor-menor" [disabled]="intentosPermitidos <= 0"  (click)="compararCartas(3)">Mayor</button>
     
     
 </div>

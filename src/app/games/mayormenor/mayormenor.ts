@@ -1,5 +1,6 @@
-import { Component, signal, WritableSignal } from '@angular/core';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { Toast } from '../../classes/toast';
+import { Estadisticasjuegos } from '../../services/estadisticasjuegos';
 
 @Component({
   selector: 'app-mayormenor',
@@ -9,6 +10,8 @@ import { Toast } from '../../classes/toast';
 })
 
 export class Mayormenor {
+  puntajeService = inject(Estadisticasjuegos);
+
   intentosPermitidos: number;
   numeroInicial: number;
   numeroSecreto: number;
@@ -97,7 +100,7 @@ export class Mayormenor {
 
     this.mostrarResultado();
 
-    if (this.intentosPermitidos === 0) {
+    if (this.intentosPermitidos <= 0 ) {
       Toast.fire({
         icon: 'error',
         title: 'Finalizo El Juego',
@@ -105,12 +108,13 @@ export class Mayormenor {
       });
 
       //ACA TENGO QUE LLAMAR A GUARDAR EL PUNTAJE.
+      setTimeout(()=> this.guardarPuntaje(this.puntaje),2000);
+      console.log('Puntaje de juego',this.puntaje);
 
-      
-      this.cartaInicial.set('assets/mayormenor/cartaOculta.png');
+      /*this.cartaInicial.set('assets/mayormenor/cartaOculta.png');
       this.cartaOculta.set('assets/mayormenor/cartaOculta.png');
       this.puntaje = 0;
-      this.intentosPermitidos = 0;
+      this.intentosPermitidos = 0;*/
     }
   }
 
@@ -126,6 +130,7 @@ export class Mayormenor {
   }
 
   //Tiene que llamar al servicio de Auth y guardarme el puntaje.
-  guardar(){
+  async guardarPuntaje(puntaje: number, nombreJuego: string = 'mayormenor'){
+      await this.puntajeService.guardarResultado(puntaje, nombreJuego)
 
   }}
