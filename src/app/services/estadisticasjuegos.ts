@@ -26,10 +26,10 @@ export class Estadisticasjuegos {
       .select('*')
       .eq('usuario', this.usuario);
     
-      console.log('Error:', error)
+    console.log('Error:', error)
     let puntajePrevio = 0;
 
-    if(data && data[0][juego] != null){
+    if(data && data[0] && data[0][juego] != null){
       puntajePrevio = data[0][juego];
     }
     await this.supabService.supabase.from('resultados').upsert({
