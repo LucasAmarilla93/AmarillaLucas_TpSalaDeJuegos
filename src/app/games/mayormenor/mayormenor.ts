@@ -20,8 +20,10 @@ export class Mayormenor {
   cartaOculta: WritableSignal<string>;
   cartaDescubierta: WritableSignal<string>;
   cartaInicial: WritableSignal<string>;
+  continuarJugando: boolean;
 
   constructor() {
+    this.continuarJugando = true;
     this.puntaje = 0;
     this.numeroMaximo = 12;
     this.intentosPermitidos = 3;
@@ -55,6 +57,7 @@ export class Mayormenor {
 
   mostrarResultado() {
     this.cartaOculta.set(this.cartaDescubierta());
+    this.continuarJugando = false;
     setTimeout(() => {
 
       if(this.intentosPermitidos == 0){
@@ -69,11 +72,15 @@ export class Mayormenor {
       this.cartaDescubierta.set(`assets/mayormenor/${this.numeroSecreto}.png`);
 
       this.cartaOculta.set('assets/mayormenor/cartaOculta.png');
+   
+      this.continuarJugando = true;
+   
     }, 2000);
+
   }
 
   compararCartas(tipoComparacion: number) {
-        let resultadoCorrecto = false;
+    let resultadoCorrecto = false;
 
     switch (tipoComparacion) {
       //El secreto es menor
@@ -99,6 +106,7 @@ export class Mayormenor {
     }
 
     this.mostrarResultado();
+
 
     if (this.intentosPermitidos <= 0 ) {
       Toast.fire({
