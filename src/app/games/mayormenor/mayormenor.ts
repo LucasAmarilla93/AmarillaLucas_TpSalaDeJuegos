@@ -108,7 +108,7 @@ export class Mayormenor {
       });
 
       //ACA TENGO QUE LLAMAR A GUARDAR EL PUNTAJE.
-      setTimeout(()=> this.guardarPuntaje(this.puntaje),2000);
+      this.guardarPuntaje(this.puntaje)
       console.log('Puntaje de juego',this.puntaje);
 
       /*this.cartaInicial.set('assets/mayormenor/cartaOculta.png');
